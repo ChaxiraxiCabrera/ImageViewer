@@ -16,7 +16,7 @@ public class ImagePanel extends JPanel implements ImageDisplay {
 
     @Override
     protected void paintComponent(Graphics g) {
-        g.drawImage((BufferedImage) image.bitmap(), 0, 0, this);
+        g.drawImage((BufferedImage) image.bitmap(), 0, 0, this.getWidth(),this.getHeight(), this.getBackground(), this);
     }
     
     @Override
@@ -30,4 +30,6 @@ public class ImagePanel extends JPanel implements ImageDisplay {
         this.repaint();
     }
 
+    
 }
+
