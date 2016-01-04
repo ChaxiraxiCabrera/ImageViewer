@@ -11,6 +11,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JButton;
@@ -32,7 +34,7 @@ public class Application extends JFrame{
     }
 
     private void deployUI() {
-        this.setTitle(".: Image Viewer :.");
+        this.setTitle("ImageViewer");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(500, 500));
         this.setLocationRelativeTo(null);
@@ -65,12 +67,14 @@ public class Application extends JFrame{
     private JButton nextButton() {
         JButton nextButton = new JButton(">>");
         nextButton.addActionListener(doCommand("next"));
+        nextButton.addKeyListener(pressKey());
         return nextButton;
     }
 
     private JButton prevButton() {
         JButton prevButton = new JButton("<<");
         prevButton.addActionListener(doCommand("prev"));
+        prevButton.addKeyListener(pressKey());
         return prevButton;
     }
 
@@ -81,6 +85,30 @@ public class Application extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 commands.get(operation).execute();
             }
+        };
+    }
+
+    private KeyListener pressKey() {
+        return new KeyListener() {
+
+            @Override
+            public void keyTyped(KeyEvent e) {}
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                int b = e.getKeyCode();
+                
+                if ( b == KeyEvent.VK_LEFT){
+                    commands.get("prev").execute();
+                }
+                
+                if (b == KeyEvent.VK_RIGHT){
+                    commands.get("next").execute();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {}
         };
     }
 
